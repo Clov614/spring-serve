@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public interface AdminRepository extends CrudRepository<Admin,String> {
 
     Admin findByUsername(String username);
+
+    Admin findAdminByToken(String token);
 }
