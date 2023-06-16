@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins="http://localhost:8080")
+@CrossOrigin(origins="*")
 public interface NoticeRepository extends CrudRepository<Notice, Long> {
     // 按照token查询
     List<Notice> findByToken(String token);
