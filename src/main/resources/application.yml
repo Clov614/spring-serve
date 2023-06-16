@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://sh-cynosdbmysql-grp-9zelcs0o.sql.tencentcdb.com:26322/vue_db?useSSL=false&&useUnicode=true&characterEncoding=UTF-8
+    username: Clover614
+    password: Clover614
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 6000
+      idle-timeout: 24000
+
+logging:
+  level:
+    tacos: WARN
+
+server:
+  port: 9000
