@@ -7,6 +7,7 @@ import com.example.springserve.entity.Admin;
 import com.example.springserve.entity.ReqAdmin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +21,7 @@ public class AdminController {
     private Response resp;
 
     @GetMapping
+    @Transactional
     public String getTest() {
         return "get_sign";
     }
@@ -30,6 +32,7 @@ public class AdminController {
     }
 
     @PostMapping(path = "/login")
+    @Transactional
     public Response signLogin(@RequestBody ReqAdmin reqAdmin) {
         String username = reqAdmin.getUsername();
         String password = reqAdmin.getPassword();
@@ -53,6 +56,7 @@ public class AdminController {
     }
 
     @GetMapping(path = "/login")
+    @Transactional
     public Admin getLogin() {
         return new Admin("username","password","nick_name","token");
     }

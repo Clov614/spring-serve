@@ -10,6 +10,7 @@ import com.example.springserve.entity.ReqNoticeID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.Not;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,14 +35,16 @@ public class NoticeController {
     }
 
     @GetMapping("/getNoticeList")
+    @Transactional
     public Response getList() {
         // 查询notice表全部
         List<Notice> noticeList = (List<Notice>) noticeRepo.findAll();
-        log.info(noticeList.toString());
+//        log.info(noticeList.toString());
         return new Response(200,"获取全部公告成功",noticeList);
     }
 
     @PostMapping("/add")
+    @Transactional
     public Response addNotice(@RequestBody ReqNotice reqNotice) {
         // 获取title content token
         String title = reqNotice.getTitle();
@@ -58,6 +61,7 @@ public class NoticeController {
     }
 
     @PostMapping("/modify")
+    @Transactional
     public Response modifyNotice(@RequestBody ReqNoticeID reqNoticeID) {
         // 获取id title content token
         Long id = reqNoticeID.getId();
@@ -78,4 +82,23 @@ public class NoticeController {
         noticeRepo.save(notice);
         return new Response(200,"修改成功",null);
     }
+    @PostMapping("/delete")
+    @Transactional
+    public Response delNotice(@RequestBody ReqNoticeID reqNoticeID) { // 删除公告
+        // 获取id title content token
+        Long id = reqNoticeID.getId();
+        String title = reqNoticeID.getTitle();
+        String content = reqNoticeID.getContent();
+        String token = reqNoticeID.getToken();
+        // 获取需要删除的notice
+        Optional<Notice> optional = noticeRepo.findById(id);
+        Notice notice = optional.get();
+        // notice为空，id不存在返回错误
+        if (notice == null) {
+            return new Response(402,"删除条目id错误",null);
+        }
+        noticeRepo.delete(new Notice(id,title,content,token));
+        return new Response(200,"删除成功",null);
+    }
+
 }

@@ -4,9 +4,9 @@ spring:
     username: Clover614
     password: Clover614
     driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-timeout: 6000
-      idle-timeout: 24000
+#    hikari:
+#      connection-timeout: 6000
+#      idle-timeout: 24000
 
 logging:
   level:
